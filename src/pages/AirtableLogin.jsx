@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 export default function AirtableLogin() {
     const [redirecting, setRedirecting] = useState(false);
   const handleLogin = () => {
-    window.location.href = "http://localhost:4000/api/v1/auth/airtable/login";
+    window.location.href = "https://airtable-dynamic-form-builder-backend.onrender.com/api/v1/auth/airtable/login";
     // try {
     //     const url = `${import.meta.env.VITE_BACKEND_BASE_URL}/auth/airtable/login`;
     //     const response = fetch
