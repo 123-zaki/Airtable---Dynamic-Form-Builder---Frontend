@@ -19,7 +19,7 @@ export default function FormPage() {
       return;
     }
 
-    apiFetch(`/forms/${formId}`)
+    apiFetch(`/forms/${formId}`, {headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`}})
       .then((data) => {
         setForm(data.form);
         setLoading(false);
