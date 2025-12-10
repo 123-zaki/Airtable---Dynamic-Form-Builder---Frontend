@@ -83,6 +83,7 @@ export default function CreateForm() {
       const res = await apiFetch("/forms/create-form", {
         method: "POST",
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`
         },
         body: JSON.stringify(payload),
