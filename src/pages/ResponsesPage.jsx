@@ -12,7 +12,7 @@ export default function ResponsesPage() {
   useEffect(() => {
     if (!formId) return;
 
-    apiFetch(`/responses/${formId}/get-all-responses`, { method: "GET" })
+    apiFetch(`/responses/${formId}/get-all-responses`, { method: "GET", headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`} })
       .then((data) => {
         setResponses(data.responses || []);
         setLoading(false);
