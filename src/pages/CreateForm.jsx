@@ -13,7 +13,7 @@ export default function CreateForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    apiFetch("/airtable/bases")
+    apiFetch("/airtable/bases", {headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`}})
       .then((d) => setBases(d.bases))
       .catch(console.error);
   }, []);
@@ -28,6 +28,7 @@ export default function CreateForm() {
     if (!id) return;
     const d = await apiFetch(`/airtable/bases/${id}/tables`, {
       method: "GET",
+      headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`}
     });
     setTables(d.tables);
   };
@@ -41,7 +42,7 @@ export default function CreateForm() {
     if (!selectedBaseId || !selectedTableId) return;
     const d = await apiFetch(
       `/airtable/bases/${selectedBaseId}/tables/${selectedTableId}/fields`,
-      { method: "GET" }
+      { method: "GET", headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`} }
     );
     setFields(
       d.fields.map((f) => ({
@@ -81,6 +82,9 @@ export default function CreateForm() {
     try {
       const res = await apiFetch("/forms/create-form", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`
+        },
         body: JSON.stringify(payload),
       });
       navigate(`/form/${res.form._id}`);
