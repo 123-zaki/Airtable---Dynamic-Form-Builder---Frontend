@@ -12,7 +12,12 @@ export default function ResponsesPage() {
   useEffect(() => {
     if (!formId) return;
 
-    apiFetch(`/responses/${formId}/get-all-responses`, { method: "GET", headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`} })
+    apiFetch(`/responses/${formId}/get-all-responses`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("airtableAccessToken")}`,
+      },
+    })
       .then((data) => {
         setResponses(data.responses || []);
         setLoading(false);
@@ -43,12 +48,9 @@ export default function ResponsesPage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 to-purple-100 p-8">
       <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-8">
-
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Form Responses
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800">Form Responses</h2>
 
           <Link
             to={`/form/${formId}`}
@@ -82,13 +84,9 @@ export default function ResponsesPage() {
               <tbody>
                 {responses.map((r, index) => (
                   <tr key={r._id} className="hover:bg-gray-50">
-                    <td className="p-3 border text-center">
-                      {index + 1}
-                    </td>
+                    <td className="p-3 border text-center">{index + 1}</td>
 
-                    <td className="p-3 border font-mono text-xs">
-                      {r._id}
-                    </td>
+                    <td className="p-3 border font-mono text-xs">{r._id}</td>
 
                     <td className="p-3 border">
                       {new Date(r.createdAt).toLocaleString()}
@@ -119,7 +117,6 @@ export default function ResponsesPage() {
             </table>
           </div>
         )}
-
       </div>
     </div>
   );

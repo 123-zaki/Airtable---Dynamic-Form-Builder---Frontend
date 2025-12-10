@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiFetch } from "../utils/apiFetch";
@@ -19,7 +18,11 @@ export default function FormPage() {
       return;
     }
 
-    apiFetch(`/forms/${formId}`, {headers: {Authorization: `Bearer ${localStorage.getItem('airtableAccessToken')}`}})
+    apiFetch(`/forms/${formId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("airtableAccessToken")}`,
+      },
+    })
       .then((data) => {
         setForm(data.form);
         setLoading(false);
@@ -41,6 +44,12 @@ export default function FormPage() {
     try {
       await apiFetch(`/responses/${formId}/submit`, {
         method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(
+            "airtableAccessToken"
+          )}`,
+        },
         body: JSON.stringify({ answers }),
       });
 
@@ -72,7 +81,6 @@ export default function FormPage() {
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 to-purple-100 p-8">
       <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">{form.name}</h2>
@@ -156,7 +164,10 @@ export default function FormPage() {
 
                   <div className="space-y-1">
                     {q.options?.map((opt) => (
-                      <label key={opt} className="flex items-center gap-2 text-sm">
+                      <label
+                        key={opt}
+                        className="flex items-center gap-2 text-sm"
+                      >
                         <input
                           type="checkbox"
                           checked={current.includes(opt)}
@@ -180,9 +191,7 @@ export default function FormPage() {
 
             // ATTACHMENT (SIMPLIFIED)
             if (q.type === "attachment") {
-              const textValue = Array.isArray(value)
-                ? value.join(", ")
-                : "";
+              const textValue = Array.isArray(value) ? value.join(", ") : "";
 
               return (
                 <div key={q.questionKey}>
