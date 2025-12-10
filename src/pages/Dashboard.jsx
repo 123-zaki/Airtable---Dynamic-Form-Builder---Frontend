@@ -8,13 +8,15 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const params = new URLSearchParams(window.location.search);
-    // const token = params.get("token");
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
 
-    // if (token) {
-    //   localStorage.setItem("airtableAccessToken", token);
-    // }
-    apiFetch("/auth/airtable/me")
+    if (token) {
+      localStorage.setItem("airtableAccessToken", token);
+    }
+
+    console.log("Token: ", token);
+    apiFetch("/auth/airtable/me", {headers: {Authorization: `Bearer ${token}`}})
       .then((data) => {
         setUser(data);
         setLoading(false);
